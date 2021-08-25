@@ -2,24 +2,8 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from "./Header/Header";
-
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-);
-
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-);
-
-const Contact = () => (
-  <div>
-    <h2>Contact</h2>
-  </div>
-);
+import Login from "./Login/Login";
+import Profile from "./Profile/Profile";
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -32,17 +16,16 @@ function App() {
 
   return (
     <div className="App">
-      <p>{!data ? "Loading..." : data}</p>
-
       <Router>
         <Route path='/:page' component={Header} />
         <Route exact path='/' component={Header} />
 
-        <Route exact path='/' component={Home} />
-        <Route exact path='/home' component={Home} />
-        <Route exact path='/about' component={About} />
-        <Route exact path='/contact' component={Contact} />
+        <Route exact path='/' component={Login} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/profile' component={Profile} />
       </Router>
+
+      {/*<p>{!data ? "Loading..." : data}</p>*/}
     </div>
   );
 }

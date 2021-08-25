@@ -1,10 +1,11 @@
 import { Link, useParams } from 'react-router-dom';
 
 import "./Header.css";
+import Search from "../Search/Search";
 
 const HeaderLink = ({ page }) => {
   const title = page.charAt(0).toUpperCase() + page.slice(1);
-  return <Link to={`/${page}`} className="headerlink-title">
+  return <Link to={`/${page}`} className="headerLink-title">
     {title}
   </Link>;
 };
@@ -14,9 +15,10 @@ const Header = () => {
 
   return (
     <div className="header">
-      <HeaderLink page="home" selected={page === "home"} />
-      <HeaderLink page="about" selected={page === "about"} />
-      <HeaderLink page="contact" selected={page === "contact"} />
+      <Search/>
+
+      <HeaderLink page="profile" selected={page === "profile"} />
+      <HeaderLink page="login" selected={page === "login"} />
     </div>
   );
 };
