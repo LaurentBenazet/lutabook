@@ -25,7 +25,7 @@ function App() {
         <Route exact path='/profile' component={Profile} />
       </Router>
 
-      {/*<p>{!data ? "Loading..." : data}</p>*/}
+      <p>{!data ? "Loading..." : data}</p>
     </div>
   );
 }

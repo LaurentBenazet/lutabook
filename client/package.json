@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "lutabook_client",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001",
@@ -18,8 +18,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom --coverage --testResultsProcessor jest-sonar-reporter",
+    "sonar": "node sonar-project.js",
     "eject": "react-scripts eject"
+  },
+  "jestSonar": {
+    "reportPath": "coverage",
+    "reportFile": "test-reporter.xml",
+    "indent": 4
   },
   "eslintConfig": {
     "extends": [
