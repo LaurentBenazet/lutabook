@@ -2,18 +2,18 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
-const config = process.env;
+const { TOKEN_KEY } = process.env;
 
 const verifyToken = (req, res, next) => {
-  const token = req.body.token || req.query.token || req.headers["x-access-token"];
+  const token = req.body.token || req.query.token;
 
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
   try {
-    req.user = jwt.verify(token, config.TOKEN_KEY);
+    req.user = jwt.verify(token, TOKEN_KEY);
   } catch (err) {
-    return res.status(401).send("Invalid Token");
+    return res.status(401).send("Invalid token");
   }
   return next();
 };

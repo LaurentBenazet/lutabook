@@ -1,7 +1,6 @@
 require("dotenv").config();
 require("./config/database").connect();
 const express = require("express");
-const { verifyToken } = require("./controllers/auth");
 const authRoute = require("./routes/auth");
 const path = require("path");
 
@@ -14,10 +13,6 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.use(express.json());
 
 app.use('/auth', authRoute);
-
-app.post('/welcome', verifyToken, (req, res) => {
-  res.status(200).send("Welcome 🙌 ");
-});
 
 // Handle GET requests to /api route
 app.get("/api", (req, res) => {
