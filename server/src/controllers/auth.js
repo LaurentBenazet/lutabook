@@ -24,8 +24,20 @@ const register = async (req, res) => {
     const { first_name, last_name, email, password } = req.body;
 
     // Validate user input
-    if (!(email && password && first_name && last_name)) {
-      res.status(400).send("All input is required");
+    if (!email) {
+      res.status(400).send("Email is required");
+      return;
+    }
+    if (!password) {
+      res.status(400).send("Password is required");
+      return;
+    }
+    if (!first_name) {
+      res.status(400).send("First name is required");
+      return;
+    }
+    if (!last_name) {
+      res.status(400).send("Last name is required");
       return;
     }
 
@@ -33,7 +45,7 @@ const register = async (req, res) => {
     const alreadyExistentUser = await User.findOne({ email });
 
     if (alreadyExistentUser) {
-      return res.status(409).send("User Already Exist. Please Login");
+      return res.status(409).send("User already exists. Please login");
     }
 
     // Encrypt user password
@@ -69,28 +81,39 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     // Validate user input
-    if (!(email && password)) {
-      res.status(400).send("All input is required");
+    if (!email) {
+      res.status(400).send("Email is required");
+      return;
+    }
+    if (!password) {
+      res.status(400).send("Password is required");
+      return;
     }
 
     // Check if user exists in our database
     const alreadyExistentUser = await User.findOne({ email });
 
-    if (alreadyExistentUser && (await bcrypt.compare(password, alreadyExistentUser.password))) {
-      // Create and save user token
-      alreadyExistentUser.token = jwt.sign(
-        { user_id: alreadyExistentUser._id, email },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "2h"
-        }
-      );
+    if (alreadyExistentUser) {
+      if (await bcrypt.compare(password, alreadyExistentUser.password)) {
+        // Create and save user token
+        alreadyExistentUser.token = jwt.sign(
+          { user_id: alreadyExistentUser._id, email },
+          process.env.TOKEN_KEY,
+          {
+            expiresIn: "2h"
+          }
+        );
 
-      // Return the user found
-      res.status(200).json(alreadyExistentUser);
-      return;
+        // Return the user found
+        res.status(200).json(alreadyExistentUser);
+      }
+      else {
+        res.status(400).send("Invalid credentials");
+      }
     }
-    res.status(400).send("Invalid Credentials");
+    else {
+      res.status(400).send("User doesn't exist");
+    }
   } catch (err) {
     console.log(err);
   }

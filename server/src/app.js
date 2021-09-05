@@ -6,6 +6,7 @@ const authRoute = require("./routes/auth");
 const path = require("path");
 
 const app = express();
+app.disable("x-powered-by");
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));

@@ -4,13 +4,9 @@ const express = require("express");
 const router = express.Router();
 
 // Register
-router.post("/register", (req, res) => {
-  register(req, res).catch(console.error);
-});
+router.post("/register", register);
 
 // Login
-router.post("/login", (req, res) => {
-  login(req, res).catch(console.error);
-});
+router.post("/login", login);
 
 module.exports = router;

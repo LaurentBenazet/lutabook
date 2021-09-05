@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "sonar": "npm run test && node server/sonar-project.js && cd client && npm run sonar ",
-    "test": "jest --coverage --detectOpenHandles && cd client && npm run test",
+    "test": "jest --coverage --detectOpenHandles --setupFiles dotenv/config && cd client && npm run test",
     "start": "node server/src/index.js",
     "dev": "nodemon server/src/index.js",
     "build": "cd client && npm install && npm run build"

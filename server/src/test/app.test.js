@@ -1,9 +1,9 @@
 const request = require('supertest')
 const server = require('../app.js')
-const mongoose = require("mongoose");
+const { closeDatabase } = require("./util/databaseHandler");
 
-describe('Get', () => {
-  it('Should get the api', async () => {
+describe('Get the api', () => {
+  test('Should get the api', async () => {
     const res = await request(server)
       .get('/api')
       .send({
@@ -15,7 +15,8 @@ describe('Get', () => {
     expect(res.body.message).toEqual('Hello from server!');
   })
 })
+
 afterAll(async () => {
   await new Promise(resolve => setTimeout(() => resolve(), 500)); // avoid jest open handle error
-  await mongoose.connection.close();
+  await closeDatabase();
 });
